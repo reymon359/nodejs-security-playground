@@ -7,10 +7,22 @@ const winston = require('winston');
 const bodyParser = require('body-parser');
 const app = express();
 
-app.use(cors());
-app.use(helmet());
+// const whitelist = ['http://example1.com', 'http://example2.com']
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   }
+// }
+// app.use(cors(corsOptions));
+
+app.use(cors()); // Access Control to certain origins
+app.use(helmet()); // Security layer to http headers
 app.use(bodyParser.json());
-// app.use(morgan('combined'));
+app.use(morgan('combined')); // Requests logger
 
 app.get('/', (req, res) => {
 	res.cookie('session', '1', { httpOnly: true });
