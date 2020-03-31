@@ -2,7 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
-var winston = require('winston');
+const winston = require('winston');
 
 const bodyParser = require('body-parser');
 const app = express();
@@ -10,15 +10,15 @@ const app = express();
 app.use(cors());
 app.use(helmet());
 app.use(bodyParser.json());
-app.use(morgan('combined'));
+// app.use(morgan('combined'));
 
 app.get('/', (req, res) => res.send('Hello World!'));
 
 app.post('/secret', (req, res) => {
 	const { userInput } = req.body;
-	console.log(userInput);
+	winston.log('info', userInput);
 	if (userInput) {
-		winston.log('info', 'user input: ' + userInput);
+		winston.log('info', 'User input: ' + userInput);
 		res.status(200).json('success');
 	} else {
 		winston.error('This guy is messing with us:' + userInput);
